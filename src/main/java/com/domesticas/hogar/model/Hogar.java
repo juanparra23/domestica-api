@@ -1,5 +1,8 @@
 package com.domesticas.hogar.model;
 
+
+
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,4 +31,10 @@ public class Hogar {
     public void prePersist() {
         this.fechaCreacion = LocalDateTime.now();
     }
+   
+    @Column(name = "codigo_acceso", unique = true)
+    private String codigoAcceso;
+
+    @Column(length = 255)
+    private String descripcion;
 }
