@@ -9,6 +9,9 @@ import com.domesticas.usuario.model.Usuario;
 import com.domesticas.usuario.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.domesticas.usuario.dto.request.ActualizarPerfilRequest;
+
+
 
 import java.util.List;
 
@@ -42,4 +45,42 @@ public class UsuarioService {
                 .mensaje("Perfil obtenido correctamente")
                 .build();
     }
+    public UsuarioResponse actualizarPerfil(String emailActual, ActualizarPerfilRequest request) {
+
+    Usuario usuario = usuarioRepository.findByEmail(emailActual)
+            .orElseThrow(() -> new BadRequestException("Usuario no encontrado"));
+
+   
+    if (request.getNombre() == null || request.getNombre().isBlank()) {
+        throw new BadRequestException("El nombre es obligatorio");
+    }
+
+    
+    if (request.getEmail() == null || request.getEmail().isBlank()) {
+        throw new BadRequestException("El correo es obligatorio");
+    }
+
+    
+    if (!usuario.getEmail().equals(request.getEmail())) {
+
+        boolean existe = usuarioRepository.findByEmail(request.getEmail()).isPresent();
+
+        if (existe) {
+            throw new BadRequestException("El correo ya está en uso");
+        }
+    }
+
+    
+    usuario.setNombre(request.getNombre());
+    usuario.setEmail(request.getEmail());
+
+    Usuario actualizado = usuarioRepository.save(usuario);
+
+    return UsuarioResponse.builder()
+            .id(actualizado.getId())
+            .nombre(actualizado.getNombre())
+            .email(actualizado.getEmail())
+            .mensaje("Perfil actualizado correctamente")
+            .build();
+}
 }

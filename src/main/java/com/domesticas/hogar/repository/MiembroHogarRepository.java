@@ -16,4 +16,9 @@ public interface MiembroHogarRepository extends JpaRepository<MiembroHogar, Long
     List<MiembroHogar> findByHogarId(Long hogarId);
 
     Optional<MiembroHogar> findByHogarIdAndEsAdministradorTrue(Long hogarId);
+
+    Optional<MiembroHogar> findByHogarIdAndUsuarioEmail(Long hogarId, String email);
+
+   
+
 }

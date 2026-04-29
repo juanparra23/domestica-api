@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class Usuario {
 
     @Id
@@ -34,4 +35,7 @@ public class Usuario {
     public void prePersist() {
         this.fechaCreacion = LocalDateTime.now();
     }
+    public String getEmail() {
+    return email;
+}
 }
