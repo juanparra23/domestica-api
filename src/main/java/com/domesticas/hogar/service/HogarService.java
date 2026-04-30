@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.domesticas.hogar.dto.response.MiembroGrupoResponse;
 import com.domesticas.hogar.dto.response.DetalleHogarResponse;
 import java.util.UUID;
+import java.util.Map;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -112,6 +113,13 @@ public class HogarService {
                 .miembros(miembrosResponse)
                 .codigoAcceso(esAdmin ? hogar.getCodigoAcceso() : null)
                 .mensaje("Información del grupo obtenida correctamente")
+                .links(Map.of(
+                        "self", "/api/v1/hogares/" + hogar.getId(),
+                        "editar", "/api/v1/hogares/" + hogar.getId(),
+                        "eliminar", "/api/v1/hogares/" + hogar.getId(),
+                        "abandonar", "/api/v1/hogares/" + hogar.getId() + "/abandonar",
+                        "crear-tarea", "/api/v1/tareas"
+                ))
                 .build();
         }
     
@@ -139,11 +147,16 @@ public class HogarService {
      
         Hogar actualizado = hogarRepository.save(hogar);
 
-        return HogarResponse.builder()
+                return HogarResponse.builder()
                 .id(actualizado.getId())
                 .nombre(actualizado.getNombre())
                 .descripcion(actualizado.getDescripcion())
                 .mensaje("Grupo actualizado correctamente")
+                .links(Map.of(
+                        "self", "/api/v1/hogares/" + actualizado.getId(),
+                        "editar", "/api/v1/hogares/" + actualizado.getId(),
+                        "eliminar", "/api/v1/hogares/" + actualizado.getId()
+                ))
                 .build();
         }
 
