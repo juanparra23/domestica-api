@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - feature/implementacion-hateoas
+      - feature/*
   pull_request:
     branches:
       - main
@@ -23,8 +23,8 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Dar permisos al Maven Wrapper
+      - name: Permisos Maven
         run: chmod +x mvnw
 
-      - name: Compilar proyecto
+      - name: Build
         run: ./mvnw clean package -DskipTests
