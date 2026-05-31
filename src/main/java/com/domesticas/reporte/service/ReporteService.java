@@ -51,6 +51,12 @@ public class ReporteService {
                     Tarea primera = lista.get(0);
 
                     return ReporteUsuarioResponse.builder()
+                            .links(Map.of(
+                                "self", "/api/v1/reportes/tareas-usuarios/" + hogarId,
+                                "distribucion-responsabilidades", "/api/v1/reportes/distribucion/" + hogarId,
+                                "historial-cumplimiento", "/api/v1/reportes/cumplimiento/" + hogarId,
+                                "tareas-hogar", "/api/v1/tareas/hogar/" + hogarId
+))    
                             .usuario(primera.getUsuario().getNombre())
                             .asignadas((long) lista.size())
                             .enProceso(lista.stream()
@@ -98,12 +104,19 @@ public class ReporteService {
                         ((double) totalUsuario / totalTareasGrupo) * 100;
 
                 return DistribucionResponsabilidadResponse.builder()
+                        .links(Map.of(
+                        "self", "/api/v1/reportes/distribucion/" + hogarId,
+                        "reporte-tareas-usuarios", "/api/v1/reportes/tareas-usuarios/" + hogarId,
+                        "historial-cumplimiento", "/api/v1/reportes/cumplimiento/" + hogarId,
+                        "tareas-hogar", "/api/v1/tareas/hogar/" + hogarId
+))
                         .usuario(primera.getUsuario().getNombre())
                         .totalTareas(totalUsuario)
                         .porcentaje(
                                 Math.round(porcentaje * 100.0) / 100.0
                         )
                         .build();
+                        
             })
             .toList();
 }
@@ -161,6 +174,12 @@ public List<HistorialCumplimientoResponse> historialCumplimiento(
                                 : ((double) completadas / asignadas) * 100;
 
                 return HistorialCumplimientoResponse.builder()
+                        .links(Map.of(
+                        "self", "/api/v1/reportes/cumplimiento/" + hogarId,
+                        "reporte-tareas-usuarios", "/api/v1/reportes/tareas-usuarios/" + hogarId,
+                        "distribucion-responsabilidades", "/api/v1/reportes/distribucion/" + hogarId,
+                        "tareas-hogar", "/api/v1/tareas/hogar/" + hogarId
+))
                         .usuario(primera.getUsuario().getNombre())
                         .asignadas(asignadas)
                         .completadas(completadas)

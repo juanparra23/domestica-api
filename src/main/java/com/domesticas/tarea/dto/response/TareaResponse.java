@@ -2,7 +2,7 @@ package com.domesticas.tarea.dto.response;
 
 import lombok.Builder;
 import lombok.Data;
-
+import java.util.Map;
 import java.time.LocalDate;
 
 @Data
@@ -19,4 +19,5 @@ public class TareaResponse {
     private Long usuarioId;
     private String miembroAsignado;
     private Long hogarId;
+    private Map<String, String> links;
 }

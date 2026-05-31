@@ -1,5 +1,5 @@
 package com.domesticas.reporte.dto;
-
+import java.util.Map;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,4 +14,6 @@ public class ReporteUsuarioResponse {
     private Long enProceso;
 
     private Long completadas;
+    
+    private Map<String, String> links;
 }

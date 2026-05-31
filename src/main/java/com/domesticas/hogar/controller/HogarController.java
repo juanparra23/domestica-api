@@ -6,6 +6,7 @@ import com.domesticas.hogar.dto.response.DetalleHogarResponse;
 import com.domesticas.hogar.dto.response.HogarResponse;
 import com.domesticas.hogar.service.HogarService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -29,15 +30,16 @@ public class HogarController {
                 .body(hogarService.crearHogar(email, request));
     }
     
-    @GetMapping("/{hogarId}")
-    public ResponseEntity<DetalleHogarResponse> obtenerDetalleHogar(
-        @PathVariable Long hogarId,
-        Authentication authentication
-    ) {
-        String email = authentication.getName();
-        return ResponseEntity.ok(
-            hogarService.obtenerDetalleHogar(hogarId,email));
-    }
+@GetMapping("/{hogarId}")
+public ResponseEntity<DetalleHogarResponse> obtenerDetalleHogar(
+    @PathVariable Long hogarId,
+    Authentication authentication
+) {
+    String email = authentication.getName();
+    return ResponseEntity.ok(
+        hogarService.obtenerDetalleHogar(hogarId,email));
+}
+
 
     @PutMapping("/{hogarId}")
     public ResponseEntity<HogarResponse> actualizarHogar(

@@ -1,6 +1,6 @@
 package com.domesticas.reporte.controller;
-
 import com.domesticas.reporte.dto.DistribucionResponsabilidadResponse;
+
 import com.domesticas.reporte.dto.HistorialCumplimientoResponse;
 import com.domesticas.reporte.dto.ReporteUsuarioResponse;
 import com.domesticas.reporte.service.ReporteService;
@@ -9,10 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import com.domesticas.reporte.dto.DistribucionResponsabilidadResponse;
-import java.time.LocalDate;
-import com.domesticas.reporte.dto.HistorialCumplimientoResponse;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -46,46 +44,43 @@ public class ReporteController {
     }
 
     @GetMapping("/distribucion/{hogarId}")
-public ResponseEntity<List<DistribucionResponsabilidadResponse>>
-distribucionResponsabilidades(
-        @PathVariable Long hogarId,
-        Authentication authentication
-) {
+    public ResponseEntity<List<DistribucionResponsabilidadResponse>> distribucionResponsabilidades(
+            @PathVariable Long hogarId,
+            Authentication authentication
+    ) {
+        return ResponseEntity.ok(
+                reporteService.distribucionResponsabilidades(
+                        hogarId,
+                        authentication.getName()
+                )
+        );
+    }
 
-    return ResponseEntity.ok(
-            reporteService.distribucionResponsabilidades(
-                    hogarId,
-                    authentication.getName()
-            )
-    );
-}
-@GetMapping("/cumplimiento/{hogarId}")
-public ResponseEntity<List<HistorialCumplimientoResponse>>
-historialCumplimiento(
-        @PathVariable Long hogarId,
+    @GetMapping("/cumplimiento/{hogarId}")
+    public ResponseEntity<List<HistorialCumplimientoResponse>> historialCumplimiento(
+            @PathVariable Long hogarId,
 
-        @RequestParam(required = false)
-        Long usuarioId,
+            @RequestParam(required = false)
+            Long usuarioId,
 
-        @RequestParam(required = false)
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-        LocalDate fechaInicio,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate fechaInicio,
 
-        @RequestParam(required = false)
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-        LocalDate fechaFin,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate fechaFin,
 
-        Authentication authentication
-) {
-
-    return ResponseEntity.ok(
-            reporteService.historialCumplimiento(
-                    hogarId,
-                    usuarioId,
-                    fechaInicio,
-                    fechaFin,
-                    authentication.getName()
-            )
-    );
-}
+            Authentication authentication
+    ) {
+        return ResponseEntity.ok(
+                reporteService.historialCumplimiento(
+                        hogarId,
+                        usuarioId,
+                        fechaInicio,
+                        fechaFin,
+                        authentication.getName()
+                )
+        );
+    }
 }

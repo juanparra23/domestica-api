@@ -1,6 +1,6 @@
 
 package com.domesticas.reporte.dto;
-
+import java.util.Map;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,4 +13,6 @@ public class DistribucionResponsabilidadResponse {
     private Long totalTareas;
 
     private Double porcentaje;
+
+    private Map<String, String> links;
 }

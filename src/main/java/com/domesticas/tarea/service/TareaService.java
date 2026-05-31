@@ -15,6 +15,7 @@ import com.domesticas.hogar.model.MiembroHogar;
 import com.domesticas.hogar.repository.MiembroHogarRepository;
 import com.domesticas.tarea.dto.response.TareaCompletadaResponse;
 import java.util.List;
+import java.util.Map;
 
 import java.time.LocalDateTime;
 
@@ -115,6 +116,14 @@ public class TareaService {
 
     return tareas.stream()
             .map(t -> TareaResponse.builder()
+                    .links(Map.of(
+                    "self", "/api/v1/tareas/" + t.getId(),
+                    "editar", "/api/v1/tareas/" + t.getId(),
+                    "eliminar", "/api/v1/tareas/" + t.getId(),
+                    "cambiar-estado", "/api/v1/tareas/" + t.getId() + "/estado",
+                    "tareas-hogar", "/api/v1/tareas/hogar/" + t.getHogar().getId(),
+                    "reporte-hogar", "/api/v1/reportes/tareas-usuarios/" + t.getHogar().getId()
+                    ))
                     .id(t.getId())
                     .nombre(t.getNombre())
                     .descripcion(t.getDescripcion())
@@ -126,6 +135,8 @@ public class TareaService {
                     .miembroAsignado(t.getUsuario().getNombre())
                     .hogarId(t.getHogar().getId())
                     .build())
+                   
+
             .toList();
 }
 
